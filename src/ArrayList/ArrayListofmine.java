@@ -5,13 +5,16 @@ public class ArrayListofmine<E> {
     private int size;
     private E[] elements;
 
+    //定义静态变量
     private static final int DEFAULT_CAPATICY = 10;
     private static final int ELEMENT_NO_FOUNT = -1;
 
+    //有参构造
     public ArrayListofmine(int capaticy){
         capaticy = (capaticy<DEFAULT_CAPATICY)?DEFAULT_CAPATICY:capaticy;
         elements = (E[]) new Object[capaticy];
     }
+    //无参构造
     public ArrayListofmine(){
         this(DEFAULT_CAPATICY);
     }
@@ -27,6 +30,7 @@ public class ArrayListofmine<E> {
     public boolean contains(E element){
         return indeOf(element)!=ELEMENT_NO_FOUNT;
     }
+    //get函数
     public E get(int index){
         if(index<0||index>=size)
             throw new IndexOutOfBoundsException("数组越界");
@@ -42,9 +46,17 @@ public class ArrayListofmine<E> {
     }
     //查找下标
     public int indeOf(E element){
-        for(int i=0;i<size;i++){
-            if(elements[i]==element)
-                return i;
+        if(element==null) {
+            for(int i=0;i<size;i++){
+                if(elements[i]==null)
+                    return i;
+            }
+        }
+        else{
+            for(int i=0;i<size;i++){
+                if(element.equals(elements[i]))
+                    return i;
+            }
         }
         return ELEMENT_NO_FOUNT;
     }
@@ -62,6 +74,9 @@ public class ArrayListofmine<E> {
     }
     //清楚所有元素
     public void clear(){
+        for(int i=0;i<size;i++){
+            elements[i] = null;
+        }
         size = 0;
     }
     //添加
@@ -75,11 +90,13 @@ public class ArrayListofmine<E> {
         for(int i=index+1;i<=size-1;i++){
             elements[i-1] = elements[i];
         }
-        size--;
+        //size--;
+        elements[--size] = null;
         return old;
     }
     //指定位置添加
     public void add(int index,E element){
+
         rangeCheckAdd(index);
 
         ensureCapacity(size+1);
@@ -91,7 +108,7 @@ public class ArrayListofmine<E> {
         elements[index] = element;
         size++;
     }
-
+    //扩容
     private void ensureCapacity(int capacity) {
         int oldCapacity = elements.length;
         if(oldCapacity>=capacity) return;
@@ -106,7 +123,7 @@ public class ArrayListofmine<E> {
 
     }
 
-
+    //输出
     @Override
     public String toString() {
         StringBuilder string =  new StringBuilder();
@@ -119,4 +136,6 @@ public class ArrayListofmine<E> {
         string.append("]");
         return string.toString();
     }
+
+
 }
