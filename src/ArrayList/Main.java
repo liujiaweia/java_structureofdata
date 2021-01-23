@@ -12,13 +12,20 @@ public class Main {
 //
 //        list.set(3,80);
 //        System.out.println(list);
-        ArrayListofmine<Person> person = new ArrayListofmine<>();
-        person.add(new Person(10,"Asda"));
-        person.add(new Person(11,"Bsda"));
-        person.add(new Person(12,"Csda"));
-        System.out.println(person);
+//        ArrayListofmine<Person> person = new ArrayListofmine<>();
+//        person.add(new Person(10,"Asda"));
+//        person.add(new Person(11,"Bsda"));
+//        person.add(new Person(12,"Csda"));
+//        System.out.println(person);
         //System.out.println(list.indeOf(969));
-
+        ArrayListofmine<Integer> list =  new ArrayListofmine<>();
+        for(int i=0;i<50;i++){
+            list.add(i);
+        }
+        for(int i=0;i<50;i++){
+            list.remove(0);
+        }
+        System.out.println(list);
 
     }
 }

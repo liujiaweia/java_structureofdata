@@ -92,6 +92,7 @@ public class ArrayListofmine<E> {
         }
         //size--;
         elements[--size] = null;
+        trim();
         return old;
     }
     //指定位置添加
@@ -121,6 +122,18 @@ public class ArrayListofmine<E> {
         elements = newElements;
         System.out.println(oldCapacity+"扩容为"+newcapacity);
 
+    }
+    private void trim(){
+        int oldCapacity = elements.length;
+        int newcapacity = oldCapacity>>1 ;
+        if(size>=newcapacity||oldCapacity<=DEFAULT_CAPATICY) return ;
+
+        E[] newElements = (E[]) new Object[newcapacity];
+        for(int i=0;i<size;i++){
+            newElements[i] = elements[i];
+        }
+        elements = newElements;
+        System.out.println(oldCapacity+"缩容为"+newcapacity);
     }
 
     //输出
