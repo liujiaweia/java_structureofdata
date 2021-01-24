@@ -1,8 +1,10 @@
 package Linklist;
 
-public class linkedList2<E> {
+//public class linkedList<E> extends absLink<E> {
+public class Linklist<E>  {
     private int size;
-    private linkedList2.Node<E> first;
+    private Node<E> first;
+    private  Node<E> last;
     private static final int ELEMENT_NO_FOUNT = -1;
 
     //边界检测
@@ -19,16 +21,28 @@ public class linkedList2<E> {
         if (index < 0 || index > size)
             throw new IndexOutOfBoundsException("Index:" + index + ",Size" + size);
     }
-    public linkedList2(){
-        first = new Node<>(null,null);
-    }
+
     private static class Node<E> {
         E element;
-        linkedList2.Node<E> next;
-
-        public Node(E element, linkedList2.Node<E> next) {
+        Node<E> next;
+        Node<E> prev;
+        public Node(Node<E>prev,E element, Node<E> next) {
+            this.prev = prev;
             this.element = element;
             this.next = next;
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+            if(prev!=null){
+                sb.append(prev.element);
+            }
+            sb.append("<-").append(element).append("->");
+            if(next!=null){
+                sb.append(next.element);
+            }
+            return sb.toString();
         }
     }
 
@@ -42,6 +56,7 @@ public class linkedList2<E> {
     public void clear() {
         size = 0;
         first = null;
+        last = null;
 
     }
 
@@ -71,20 +86,53 @@ public class linkedList2<E> {
         node.element = element;
         return old;
     }
-
+    //添加
     public void add(int index, E element) {
         rangeCheckAdd(index);
-        //插入在0位置;
-        Node<E> prenode =index==0?first:node(index - 1);
-        prenode.next = new linkedList2.Node<>(element, prenode.next);
+        if(index==size){//最后添加
+            Node<E> oldLast = last;
+            last = new Node<>(oldLast,element,null);
+            if(oldLast==null){
+                first = last;
+            }else{
+                oldLast.next = last;
+            }
+        }else {
+            Node<E> next = node(index);
+            Node<E> prev = next.prev;
+
+            Node<E> node = new Node<>(prev, element, next);
+
+            next.prev = node;
+            if (prev == null) {
+                first = node;
+            } else {
+                prev.next = node;
+            }
+        }
+
+
         size++;
 
     }
+    //删除
     public E remove(int index){
         rangeCheck(index);
-        Node<E> pre =index==0?first:node(index - 1);
-        Node<E>  node = pre.next;
-        pre.next = node.next;
+
+        Node<E> node = node(index);
+        Node<E> prev = node.prev;
+        Node<E> next = node.next;
+        if(prev==null){
+            first = next;
+        }else {
+            prev.next = next;
+        }
+        if(next==null){
+            last = prev;
+        }else {
+            next.prev = prev;
+        }
+
         size--;
         return node.element;
     }
@@ -108,22 +156,31 @@ public class linkedList2<E> {
         return ELEMENT_NO_FOUNT;
     }
 
-
-    private linkedList2.Node<E> node(int index) {
+    //查找节点
+    private Node<E> node(int index) {
         rangeCheck(index);
-        Node<E> node = first.next;
-        for (int i = 0; i < index; i++)
-            node = node.next;
-        return node;
+
+        if(index<size>>1){
+            Node<E> node = first;
+            for (int i = 0; i < index; i++)
+                node = node.next;
+            return node;
+        }else{
+            Node<E> node = last;
+            for (int i = size-1; i > index; i--)
+                node = node.prev;
+            return node;
+        }
+
     }
 
     @Override
     public String toString() {
         StringBuilder string =  new StringBuilder();
         string.append("size==").append(size).append(",[");
-        Node<E> node = first.next;
+        Node<E> node = first;
         for(int i=0;i<size;i++){
-            string.append(node.element);
+            string.append(node);
             if(i!=size-1)
                 string.append(",");
             node = node.next;

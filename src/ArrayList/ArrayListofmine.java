@@ -1,4 +1,7 @@
 package ArrayList;
+
+import java.util.Objects;
+
 //所有的类都继承Object
 public class ArrayListofmine<E> {
 
@@ -78,6 +81,9 @@ public class ArrayListofmine<E> {
             elements[i] = null;
         }
         size = 0;
+        if(elements!=null&&elements.length>DEFAULT_CAPATICY) {
+            elements = (E[]) new Objects[DEFAULT_CAPATICY];
+        }
     }
     //添加
     public void add(E element){

@@ -1,9 +1,8 @@
 package Linklist;
 
-//public class linkedList<E> extends absLink<E> {
-public class linkedList<E>  {
+public class singlelinkedList2<E> {
     private int size;
-    private Node<E> first;
+    private singlelinkedList2.Node<E> first;
     private static final int ELEMENT_NO_FOUNT = -1;
 
     //边界检测
@@ -20,12 +19,14 @@ public class linkedList<E>  {
         if (index < 0 || index > size)
             throw new IndexOutOfBoundsException("Index:" + index + ",Size" + size);
     }
-
+    public singlelinkedList2(){
+        first = new Node<>(null,null);
+    }
     private static class Node<E> {
         E element;
-        Node<E> next;
+        singlelinkedList2.Node<E> next;
 
-        public Node(E element, Node<E> next) {
+        public Node(E element, singlelinkedList2.Node<E> next) {
             this.element = element;
             this.next = next;
         }
@@ -74,25 +75,16 @@ public class linkedList<E>  {
     public void add(int index, E element) {
         rangeCheckAdd(index);
         //插入在0位置;
-        if(index == 0){
-            first = new Node<>(element,first);
-        }else {
-            Node<E> prenode = node(index - 1);
-            prenode.next = new Node<>(element, prenode.next);
-        }
+        Node<E> prenode =index==0?first:node(index - 1);
+        prenode.next = new singlelinkedList2.Node<>(element, prenode.next);
         size++;
 
     }
     public E remove(int index){
         rangeCheck(index);
-        Node<E> node = first;
-        if(index==0) {
-            first = first.next;
-        }else {
-            Node<E> pre = node(index - 1);
-            node = pre.next;
-            pre.next = node.next;
-        }
+        Node<E> pre =index==0?first:node(index - 1);
+        Node<E>  node = pre.next;
+        pre.next = node.next;
         size--;
         return node.element;
     }
@@ -117,9 +109,9 @@ public class linkedList<E>  {
     }
 
 
-    private Node<E> node(int index) {
+    private singlelinkedList2.Node<E> node(int index) {
         rangeCheck(index);
-        Node<E> node = first;
+        Node<E> node = first.next;
         for (int i = 0; i < index; i++)
             node = node.next;
         return node;
@@ -129,7 +121,7 @@ public class linkedList<E>  {
     public String toString() {
         StringBuilder string =  new StringBuilder();
         string.append("size==").append(size).append(",[");
-        Node<E> node = first;
+        Node<E> node = first.next;
         for(int i=0;i<size;i++){
             string.append(node.element);
             if(i!=size-1)
