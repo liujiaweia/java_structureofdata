@@ -5,7 +5,7 @@ import java.util.Objects;
 //所有的类都继承Object
 public class ArrayListofmine<E> {
 
-    private int size;
+    public int size;
     private E[] elements;
 
     //定义静态变量
