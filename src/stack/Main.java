@@ -3,11 +3,11 @@ package stack;
 public class Main {
     public static void main(String[] args) {
         Stackofmine<Integer> stack = new Stackofmine<>();
-        stack.add(11);
-        stack.add(12);
-        stack.add(13);
-        stack.add(14);
-        while(!stack.isempty()){
+        stack.push(11);
+        stack.push(12);
+        stack.push(13);
+        stack.push(14);
+        while(!stack.isEmpty()){
             System.out.println(stack.pop());
         }
     }
