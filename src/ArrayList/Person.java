@@ -9,6 +9,10 @@ public class Person {
         this.name = name;
     }
 
+    public Person(Integer datum) {
+    }
+
+
     @Override
     public String toString() {
         return "Person{" +
