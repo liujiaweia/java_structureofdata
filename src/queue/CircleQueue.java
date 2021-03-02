@@ -57,11 +57,11 @@ public class CircleQueue<E> {
     }
 
     public void clear() {
-        size = 0;
-        front = 0;
         for (int i = 0; i < elements.length; i++) {
             elements[i] = null;
         }
+        size = 0;
+        front = 0;
     }
 
     @Override

@@ -17,6 +17,6 @@ public class Person implements Comparable<Person> {
         return age-e.age;
     }
     public String toString(){
-        return  "Person_age="+age+ "";
+        return  "P"+age+ " ";
     }
 }
